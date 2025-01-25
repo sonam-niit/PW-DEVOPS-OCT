@@ -1,0 +1,155 @@
+Requirement is Deploying a Web Application created By python
+
+If you want to deploy this on one server what is the process?
+
+1. Create AWS instance and connect with the same
+2. Install Python and its dependencies
+3. Application code is Required to deploy, you can copy or clone through git hub
+4. Set up a configuration file (like DB URL, Port number, log diretory)
+5. Start Applictaion as Service
+
+If you want to do the same Process on 10 Servers (10 AWS Instances) what is the process??
+
+1. Login to each Server manually complete below process
+2. Install Python and its dependencies
+3. Application code is Required to deploy, you can copy or clone through git hub
+4. Set up a configuration file (like DB URL, Port number, log diretory)
+5. Start Applictaion as Service
+
+If We use configuration Management (Ansible)
+-- We can automare all the steps in one file (called play book) which you can execute using
+Ansible which will run automatically to all your server which ensures consistency and also it can 
+make sure like there is no human errors
+
+Popular Tools Used for configuration Management:
+
+1. Ansible
+    Agentless tool where you need to create YAML files (Playbook)
+    its useful for web app deployment , automating some task
+2. Chef:
+    set up infrastructure automation
+    it Ruby based files we need to create (called Recepies or Cookbook)
+3. Puppet:
+    good features for generating strong reports and working with compliance tools
+4. Terraform:
+    CaaS (Code As a Service): AWS lambda, Azure functions
+    set up infra in code and manage changes with planned workflow
+5. Kubernates configmaps and secret:
+    for managing configuration in containarized environments
+6. Helm:
+    Kubernetes package manager for deploying application with some pre-configured templates
+
+How to Setup Ansible
+-------------------------------
+To setup an ansible in Windows OS we can use WSL or we can install it via Python
+
+Ansible with WSL will give you more explorer because it provides more features from linux purspective.
+
+Enable WSL:
+> wsl --install
+
+Install Ansible in the Linux environments
+
+update the package list in ubuntu
+> sudo apt update
+
+Install Ansible
+> sudo apt install ansible -y
+
+If installed successfully verify version
+>ansible --version
+
+Let's Create One playbook.YAML
+----------------------------------------
+---
+- name: Test Ansible Playbook
+  hosts: localhost
+
+  tasks:
+  - name: Print Simple Messaged
+    debug:
+      msg: "Hello Ansible is Working"
+
+-- Once the Playbook is created Save the file
+-- now this file we will run from wsl so move to your perticular drive using wsl
+-- cd /mnt/d (this will move us to d: Drive)
+-- cd /PhysicsWalla/'Devops OCT Batch'/Ansible
+
+Run using below command:  
+> ansible-playbook playbook.yml
+
+
+Ansible Terminology
+-------------------------------
+1. Control Node:   Where we install Ansible, It manages tasks on managed hosts (nodes)
+
+2. managed Nodes: The systems or servers that ansible manages. We can also called them hosts.
+Ansible connect to these hosts via SSH(Linux) or WinRM(Windows)
+
+3. inventory:
+    File that list all managed nodes
+    you can create this file manually or you can generate dynamically
+
+    we can organize them in groups and sub groups to manage them efficiently
+
+    [webservers]
+    web1.server.com
+    web2.server.com
+    [databases]
+    db1.server.com
+
+Let's Create AWS instance using Amazon Linux AMI 
+create new key download the same and paste that in your ansible foolder
+
+-- in security groups open ssh, http and https from anywhere
+create instance..
+
+Once the instance is in the running state , select instance click on connect.
+
+in SSH Client tab copy the example link for SSH connect run it from your WSL and check.
+If you are getting any error run the same command at root level using sudo
+
+check the connectivity....
+Once we are able to verify the connectivity the next step is to create inventory file
+
+these file is having configurations of all your hosts
+
+create Docker.yml for installing docker in th aws instance
+
+Ansible adhoc commands:
+
+sudo ansible aws1 -i inventory.yml -m shell -a "sudo apt update"       
+sudo ansible aws1 -i inventory.yml -m shell -a "sudo apt upgrade"
+
+run the playbook:: 
+sudo ansible-playbook -i inventory.yml docker.yml
+
+sudo ansible aws1 -i inventory.yml -m shell -a "sudo docker version"
+
+-m indicates module
+-a indicates arguments
+
+sudo ansible-playbook -i inventory.yml docker.yml
+
+once playbook executed successfully verify it by using below commands.
+
+sudo ansible aws1 -m shell -a "sudo docker ps" -i inventory.yml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
