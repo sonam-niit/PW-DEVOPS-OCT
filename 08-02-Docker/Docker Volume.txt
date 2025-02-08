@@ -1,0 +1,86 @@
+When we create a container its provides a storage but its not persitence.
+When we remove the container we will loose our data.
+
+Let's Check.
+
+>docker run --name server1 -d -p 8080:80 nginx
+
+once it is started you can verify > docker ps (if its up check in browser)
+http://localhost:8080/
+(you can see the default page of nginx)
+
+let's get into this container
+>docker exec -it server1 bash
+in bash:
+    >echo "Hello from Container1" > file1.txt
+    >ls 
+    >cat file.txt
+    >exit
+
+you can open the container from Docker Desktop and check the files
+stop the conatiner remove the container and we lost files
+This Data if you want to persist we need volumes.
+
+Let's Take help of Volume.
+
+How to create:
+>docker volume create my_volume
+To verify:
+>docker volume ls
+>docker volume inspect my_volume (to get all details of Volume)
+
+>docker run --name server1 -d -v my_volume:/data -p 8080:80 nginx 
+>docker ps
+also open docker desktop and verify the volume status
+
+let's create some file to the container
+>docker exec -it server1 bash
+in bash:
+    >cd /data
+    >echo "Hello from Container1" > file1.txt
+    >ls 
+    >cat file.txt
+    >exit
+
+Means data stored to the volume you can check your volume in desktop
+>stop and remove the conatiner and then check the volume data again
+>it remains there
+
+If you want to access the volume you can create any container and you can use it
+You can also create temporary container and you can see the content.
+
+>docker run --rm -it -v my_volume:/storage alpine sh
+
+    / # cd data
+    /data # ls
+    /data # cat file1.txt
+    /data # exit
+
+    --rm: Automatically removes the conatiner after exit
+    -it: starts interactive terminal
+    -v : <volume_name>:/folder_name: it mounts the volume to the given folder inside the container
+    alpine: Light weight image for the shell access.
+    sh: Start the shell in container
+
+>docker run --rm -it -v my_volume:/test busybox sh
+
+    / # cd test
+    /test # ls
+    /test # cat file1.txt
+    /test # exit
+
+(This will also work)
+
+===============================================================================
+we want to share host resources to the container using bind mounts.
+
+go to the C drive and create one folder host_directory
+inside that folder create one index.html file
+add some sample code
+
+docker run -d --name server1 -p 8080:80 -v c:/host_directory:/usr/share/nginx/html nginx
+
+now check localhost:8080 (you can see your html content rather that default page of nginx)
+
+also verify the bind mount in docker desktop by clicking on container and see the bind mount location.
+

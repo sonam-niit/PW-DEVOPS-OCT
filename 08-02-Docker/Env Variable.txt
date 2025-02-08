@@ -1,0 +1,42 @@
+Let's Create Simple Nodejs Application
+create folder Backendproject
+                folder app 
+                    create package.json (npm init -y)
+                    install dependencies (npm i express dotend)
+                    create server.js file
+                    create Dockerfile
+                create .env file (for environment variable)
+                docker-compose.yml file (using app as service)
+
+First time: Compose file
+services:
+  web:
+    build: ./app
+    ports:
+      - "${PORT}:4000"
+    environment:
+      - PORT=${PORT}
+
+It will use .env port num which is 4000
+the let's up the service:
+    >docker-compose up -d --build
+    (it will create image first then up your service you can verify the container name)
+    >docker ps
+    >localhost:4000 (you can see server response)
+
+If you want to scale up let's change compose file to take random ports
+
+    services:
+        web:
+            build: ./app
+            ports:
+            - "0:4000"
+            environment:
+            - PORT=${PORT}
+
+    >docker-compose up -d --build --scale web=3
+    (scale web service 3 replicas)
+    >docker ps (you can see 3 containers up)
+
+    to stop then no need to manual procee
+    >docker-compose down

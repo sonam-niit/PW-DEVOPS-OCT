@@ -1,0 +1,29 @@
+Docker Network
+-----------------------
+we can create network under that containers can communicate with each other.
+
+docker network create network_name
+>docker network create test_network
+Let's Verify:
+>docker network ls
+>docker network inspect test_network
+Now let's create container under this network
+    >docker run -d --name container1 -p 8080:80 --network test_network nginx
+    now if you inspect network again you can see the container running under the network
+    Let's create 1 more conatiner
+    >docker run -d --name container2 -p 8081:80 --network test_network nginx
+    Let's Communicate between them
+
+>docker exec -it container1 bash
+(we want to run ping command so let's install it)
+>apt update
+>apt install iputils-ping
+>ping container2
+>stop by ctrl+c and then exit
+(if you can see the packet transfer means they are communicating)
+
+now create one container without giving network details and try to ping
+>docker run -d --name container3 -p 8082:80 nginx
+now again get into container1 and ping container3, nothing will happen but again try to
+ping container2 you can see the packet transfer. Means containers can communicate only
+if they are under same network.
