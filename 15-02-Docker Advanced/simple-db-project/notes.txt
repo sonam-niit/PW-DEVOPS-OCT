@@ -1,0 +1,34 @@
+Managing secrets in Docker file
+we can take the help of environment variables.
+
+Let's Create Simple DB connectivity code using node and express.
+create one folder named simple-db-project
+move to the folder: cd simple-db-project
+create package.json file: npm init -y
+install the dependencies: npm i express mongoose dotenv
+create .env file
+now create file server.js
+to verify the application locally you can run the command: node server.js
+check the terminal server started or not and check in browser for response
+http://localhost:8080/
+
+After this we will create Dockerfile to configure env
+create Docker Ignore file as well
+
+Let's create a docker Image for Node APP: docker build -t connect-app .
+Once image build successfully you can run container using below command:
+>docker run -d --name node-app --env-file .env -p 8080:8080 connect-app
+>docker ps
+check the DB connectivity: docker logs container-name (docker logs connect-app)
+
+(if you want to run below command make sure you delete previous running container)
+I don't want to give the file but I want to add direct environment variables
+>docker run -d --name node-app -e PORT=5000 -e MONGO_URL=ADD_YOUR_URL -p 5000:5000 connect-app
+
+If you want to docker-compose to set env 
+create docker-compose.yml file
+
+to run it:
+>docker-compose -d up --build
+check container: docker logs container-name
+>docker-compose down

@@ -1,0 +1,12 @@
+To run simple test cases
+create folder named testing
+create pachage.json file: npm init -y
+install jest: npm i jest
+change the script of test in package.json file:
+    "test":"jest"
+
+Now create calculator.js file ass some functions export them
+write test case: calc.test.js
+
+in terminal execute: npm test
+you can see no of test cases passed
