@@ -1,0 +1,44 @@
+What is Kubernetes?
+
+Open-source container orchestration Platform.
+It is created to design and atomate process of deployment, scaling and managment of your 
+containres.
+
+Problem: manage multiple containers between multiple environments.
+
+manage self healing: auto restrat or replace and reschedule if any container fails
+load balancing: distribute traffic and provide high level of availability
+manage secret and configuration management
+
+You can solve this entire Problem using Kubernets.
+
+Kubernetes Components
+------------------------------
+1. Master Node: 
+    managing the entire cluster
+    It handles all scheduling, all nodes
+    manages state management and doing all updates
+2. Worker Node:
+    Actual application workload runn
+    running here in the form of Pods
+3. Pod: 
+    --very smallest deployable unit
+    --inside one pod we can run multiple containers
+    --make sure this containers are associated with each other
+    --let's say you have application which is using DB container, backend container, frontend
+    container you can run them toggether under the one pod
+    -- they can share resources commonly
+4. API Server: communicating a hub between users and clusters
+5. Controller Manager:
+    maintain cluster 
+    maintain replicasets, load balancing
+    maintain diffrent tasks
+
+6. Scheduler: assigns a pods to nodes based on requirement resources.
+7. ETCD: storage , storing cluster info in key value pair
+8. Kubectl: agent which is running on each worker node to keep your container in expected state.
+9. Kube-proxy: managing the networking for all your K8s service.
+
+For getting more detailed documentation:
+https://kubernetes.io/docs/concepts/architecture/
+

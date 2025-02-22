@@ -1,0 +1,31 @@
+For local System Set Up 
+If Docker Desktop is installed in your system.
+
+Open Docker Desktop --> open settings --> kubernetes option --> click on smallest
+--> enable kubernetes --> apply and restrat
+
+once its restarted kubernetes is available to your System
+
+----------------------- Kubernetes Cluster ------------------------------
+
+Cluster We can create using diffrent online cloud platforms like AKS, EKS, GKS
+
+For Learning purpose we can setup a dummy cluster to our local system using minikube.
+
+https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2F.exe+download
+
+You can click on latest release and download the same.
+once it is downloaded --> double click --> complete the installation
+Check Minikube Version
+>minikube version
+
+If minikube installed success fully then you can see the version
+Let's start cluster
+>minikube start
+
+Once the cluster started check cluster info
+>kubectl cluster-info
+
+Check running nodes
+>kubectl get nodes
+(you can see one running node which is control-plane considered as master node)

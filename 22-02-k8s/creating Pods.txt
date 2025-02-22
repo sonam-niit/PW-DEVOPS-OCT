@@ -1,0 +1,49 @@
+Pod
+------------
+smalles unit of deployment in kubernetes cluster
+inside a pod we can run one or more containers
+
+Pods we can create using yml file and we can also create them directly using command as well.
+
+************* Pods using commands **************
+
+>kubectl run nginx-pod --image=nginx --restart=Never
+
+kubectl run :: used to create pods
+nginx-pod :: name of a pod
+--image=nginx :: showing the image to run in container
+--restart=Never :: assure not to restart means its just a pod not deployment
+
+>kubect get pods
+(if it is not in a running state)
+>kubect describe pod nginx-pod (check the events steps)
+>kubect get pods (pod must be in a running state)
+
+If you wnat to access the pod, you have to expose it as service
+> kubectl expose pod nginx-pod --type=NodePort --port=80
+
+--type=NodePort : makes service accesible from outside the cluster
+--port=80 :: specifying the port on which your service will be available
+
+Verify running Service: kubectl get svc
+To access service using minikube
+>minikube service nginx-pod
+(you will be redirected in browser where you can default page of nginx)
+
+*****************  Creating pod using YML *****************************
+
+Create pod.yml file as show here.
+
+> kubectl apply -f pod.yml
+> kubectl get pods
+> kubectl describe pod nginx
+
+Create Service for This pod to expose
+
+Create service.yml as shown here
+
+>kubectl apply -f service.yml
+>kubectl get services
+>minikube service my-service
+
+(check output in browser)
