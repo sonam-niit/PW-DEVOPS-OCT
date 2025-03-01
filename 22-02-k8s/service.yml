@@ -9,3 +9,4 @@ spec:
   ports:
     - port: 8080  ## Exposed Service Port
       targetPort: 80 ##Container's Port
+      nodePort: 30008

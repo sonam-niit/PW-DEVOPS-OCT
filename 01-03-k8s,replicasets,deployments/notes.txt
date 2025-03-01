@@ -1,0 +1,114 @@
+How to Manage Pods in kubernetes?
+
+We can manage in 2 ways:
+    1. Replicasets
+    2. Deployment
+
+  1. Replicasets
+
+    -- manage no of pods which are running.
+        means incase if any pod deleted or failed due to some reason it will recreate another
+        one and ensures that specified no of replicas running.
+    --  Update or delete then you have to do it mannually.
+
+    -- UseCase: If you just want to maintain Replicas then use Replicasets.
+
+  2. Deployment:
+    
+    -- manage no of pods which are running.
+    -- manage rolling updates and rollbacks.
+
+    -- updates managed automaccally
+    -- UseCase:  When managing pods replicas as well as updates and rollbacks.
+
+
+Let's Create one Replicaset
+
+*************** replicaset.yml ****************
+
+create replicaset.yml and the edit file as shown here.
+> kubectl apply -f replicaset.yml
+
+> kubectl get replicaset
+> kubectl describe replicaset frontend
+> kubectl get pods (3 replicas)
+> kubectl delete pod (name of pod)
+    (though its deleted again you check get pods )
+    (you can see no of replicas 3 only- 1 pod recreated)
+
+> kubectl scale --replicas=5 rs/frontend (scaling Up)
+> kubectl get rs
+> kubectl get pods
+
+> kubectl scale --replicas=3 rs/frontend (scaling Down)
+> kubectl get rs
+> kubectl get pods
+
+> kubectl delete replicaset frontend 
+
+***************** Deployment ********************
+
+create deployment.yml
+
+> kubectl apply -f deployment.yml
+> kubectl get deployment
+> kubectl get pods
+
+> kubectl describe deployment nginx-deployment
+ *** rollout  by changing version***
+> kubectl set image deployment.v1.apps/nginx-deployment nginx=nginx:1.16.1
+
+> kubectl rollout status deployment/nginx-deployment
+> kubectl describe deployment nginx-deployment (verify version)
+ ****** Rollback to prev version ***
+
+> kubectl rollout undo deployment/nginx-deployment
+> kubectl rollout status deployment/nginx-deployment
+> kubectl describe deployment nginx-deployment  (verify version)
+
+How to use This Deployment: By service
+
+***** deployment-service.yml ***********
+> kubectl apply -f deployment-service.yml
+> kubectl get svc 
+> minikube service dep-service
+
+(you will be redirected in browser with default page of nginx)
+
+
+--> If the trafic increase automatically kubernetes schedules the traffic handeled by 3 
+replicas and all request first passed to your service.
+
+** scale Deployment **
+
+-> kubectl scale --replicas=5 deployment/nginx-deployment
+-> kubectl get deployment
+-> kubectl get pods
+
+You can also try to scale down by reducing the replica numbers
+
+**** History of rollout ****
+
+> kubectl rollout history deployment nginx-deployment
+
+--- automatically change causes not visible
+
+to make the change cause in deployment file we can use annotations.
+
+************** deployment-anno.yml ***************
+
+> kubectl apply -f deployment-anno.yml
+> kubectl get deployment
+> kubectl get pods
+> kubectl rollout history deployment nginx-deployment
+
+Let's edit the existing file update and change the version.
+kubernetes.io/change-cause: "updated version nginx 1.16.1"
+
+-- let's update the existing configuration
+
+> kubectl apply -f deployment-anno.yml
+> kubectl rollout status deployment/nginx-deployment
+> kubectl rollout history deployment nginx-deployment
+> kubectl rollout undo deployment/nginx-deployment
+> kubectl rollout history deployment nginx-deployment
