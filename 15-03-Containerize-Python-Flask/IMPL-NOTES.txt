@@ -1,0 +1,59 @@
+create below mentioned code structure
+    folder backend:
+        config.py
+        database.py
+        models.py
+        routes.py
+        app.py
+        dependencies.py
+        Dockerfile
+
+    docker-compose.yml 
+    (config file for setting up containerize app)
+
+Terminal: docker-compose up -d --build
+it will cretae network, mysql and backend container 
+> docker ps
+> docker logs container-name
+To verify DB container
+>docker exec -it mysql_container bash
+    # mysql -u root -p (enter password)
+        > show databases;
+        > use flaskapp;
+        > show tables;
+    (use exit to exit)
+
+-- If Both containers running then Let's test APIs
+in VS Code: ctrl+shift+X (to open extention)
+install thunder-client (once installed you can see symbol of thunder client in left side panel)
+    
+click on new request
+-- http://localhost:5000/createtable (get method send)
+-- http://localhost:5000/users (get method send)
+-- http://localhost:5000/users (POST method)
+    click on body:
+        {
+            "name":"alex",
+            "email":"alex@gmail.com"
+        }
+
+    then send
+
+    (again check get method and you can see inserted records)
+
+    If you want to connect bash from docker desktop
+    go to desktop check running container
+        click in mysql_container
+        click on 4th tab (exec)
+
+        from that terminal also you can directly access container
+
+
+-- If you want to stop all your services then
+    docker-compose down
+
+
+    ( you can create react app then use this apis links and connect frontend with backend
+    then create dockerfile for frontend also and in compose file create one more frontend,
+    after that it will start 3 services 1 by 1 like DB, backend and then fronend
+    )
