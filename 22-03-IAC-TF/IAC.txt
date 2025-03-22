@@ -1,0 +1,22 @@
+IAC- Infra as  Code
+-------------------------------------
+
+You want to setup the entire infrastructure using some Code rather than doing manual set UP.
+
+Let's say you are working with multiple Providers (aws, azure, gcp)
+then we can use IAC.
+
+If you want to manage and provision of servers, networks, storages and
+databases automatically rather than manual process use IAC.
+
+****************Types of IAC***************
+
+1. Configuration Management:
+    -- manage software installation then use Ansible, chef or puppet
+
+2. Orchestration and Provisioning
+    -- Resource Creation  and manage multiple cloud Providers
+    -- Terraform
+
+3. Container Orchestration:
+    -- Docker and K8s

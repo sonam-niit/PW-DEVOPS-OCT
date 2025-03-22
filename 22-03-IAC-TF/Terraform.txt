@@ -1,0 +1,110 @@
+
+************ Terraform ***************
+
+It is IAC tool
+manage all cloud infra in declarative approach
+
+*** Core Fundamentals ***
+
+1. Configuration Files:
+
+    --Your configuration file extension is .tf 
+    -- written in HCL(Hashicorp Configuration Language)
+    -- in VS Code install extention: HashiCorp Terraform
+
+2. Providers:
+    allows you to interact with cloud Providers like aws, azure
+    like
+
+    provider "aws" {
+        region = "us-east-1"
+    }
+
+3. Resources:
+    -- define infra component like VMs, security group, key pair, s3 bucket, bucket policy
+
+    resource "aws_instance" "example" {
+        ami = "image ID"
+        instance_type = "t2.micro"
+    }
+
+4. Variables:
+
+    define paraeterized constants which you can use in your resources.
+
+    variable "linux_ami"{
+        default = "2345678998765"
+    }
+
+5. outputs 
+    displays the information in console once your infra is created.
+
+    output "instance_id" {
+        value = aws_instance.example.id
+    }
+
+
+********** Work Flow **************
+
+step 1: intialize working directory : terraform init 
+
+step 2: Create Plan: terraform Plan
+
+step 3: Create or Update: terraform apply
+
+step 4: destroy the resources: terraform destroy
+
+************************************************************
+
+Install Terraform: 
+https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
+
+follow the installation steps:
+
+Open WSL in execute below commands:
+
+sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
+
+wget -O- https://apt.releases.hashicorp.com/gpg | \
+gpg --dearmor | \
+sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
+
+gpg --no-default-keyring \
+--keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg \
+--fingerprint
+
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+sudo tee /etc/apt/sources.list.d/hashicorp.list
+
+sudo apt update
+
+sudo apt-get install terraform
+
+terraform -version
+
+(if you are able to version its installed successfully)
+
+___________________________________________________________________________
+
+Let's Create one simple example 
+
+create folder named demo1
+    create file named main.tf
+
+add the code as metioned then open the folder from WSL
+
+-- terraform init
+-- terraform Plan
+-- terraform apply
+(check the cretaed file)
+-- terraform destroy
+(files will get deleted)
+
+
+*********** Create EC2instance Using terraform ************
+
+first of all make sure you have aws cli configured in your WSL
+
+create folder named demo2
+    create main.tf
