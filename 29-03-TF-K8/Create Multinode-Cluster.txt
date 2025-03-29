@@ -1,0 +1,22 @@
+minikube start --nodes=3 -p multinode-cluster
+
+--nodes to give no of nodes
+-p multinode-cluster (profile)
+
+Incase if you are getting any error due to existing minikube cluster use below command
+
+	minikube delete
+	minikube delete -p multinode-cluster
+
+(after deleting this also getting error of configuration file then)
+ go to C drive--> Users--> user-name--> .minikube --> machines --> delete all content from here
+
+After that re run the command
+
+If everything goes well then check cluster
+
+> minikube status -p multinode-cluster
+
+> minikube get nodes
+
+	( 2 can see 1 control-plane and 2 worker nodes)

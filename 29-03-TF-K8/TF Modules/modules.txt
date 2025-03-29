@@ -1,0 +1,28 @@
+to manage your TF resources you can use.
+structure your TF project
+
+project 
+    module1
+        main.tf 
+        outputs.tf
+        variables.tf
+    module2
+        main.tf 
+        outputs.tf
+        variables.tf
+    main.tf
+    outputs.tf
+    variables.tf
+
+Structure of project after using modules
+
+-------------------------------------------------------
+Remote Backend
+
+by default when we are working with Tf it uses local backend.
+it creates terraform.tfstate file which is stored locally.
+
+for managing remote backend we can create one resource like s3 bucket and 
+we can use tfstate file from bucket rather than using local one.
+
+    
