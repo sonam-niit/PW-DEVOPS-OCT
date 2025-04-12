@@ -1,15 +1,17 @@
 resource "aws_s3_bucket_replication_configuration" "replication" {
   bucket = aws_s3_bucket.source.id
-  role = aws_iam_role.replication_role.arn
+  role   = aws_iam_role.replication_role.arn
+
   rule {
-    id = "replicate-all-objects"
+    id     = "replicate-all-objects"
     status = "Enabled"
 
     filter {
       prefix = ""
     }
+
     destination {
-      bucket = aws_s3_bucket.destination.id
+      bucket        = aws_s3_bucket.destination.arn
       storage_class = "STANDARD"
     }
   }

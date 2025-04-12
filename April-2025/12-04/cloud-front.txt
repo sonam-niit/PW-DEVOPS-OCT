@@ -1,0 +1,47 @@
+Cloud front
+------------------
+CDN: content delivery network tool
+using that we can deliver our contents
+APIs, static websites, video steaming etc..
+
+Faster speed.
+
+edge based data fetching
+proving caching feature
+response provided from the cache
+
+let's create one S3 bucket
+------------------------------------
+create bucket: sonam-cloud-front-example-1
+enable versions
+uncheck on block Public access
+other option keep as default
+
+upload 3 files which i have shared.
+bucket properties --> scroll last --> static site hosting
+enable it --> add index.html
+when you save it scroll down again check the provided link to access
+
+if permission blocked --> go to permission set policy --> edit
+try to generate policy using policy generator
+select: s3 bucket policy
+priciple: *, action: get Object
+arn: give bucket arn number with /* (giving permission to all bucket object)
+
+save and check that link again
+--------------------------------------------------------------
+to provide output as CDN using cloud front
+go to the cloud front
+create distribution: bucket-endpoint name, other configuration keep as it is, 
+viewer policy use https only, Firewall: not add any security option
+save --> create distribution --> once its done
+check the deployment status and try to access with the provide domain name:
+it looks: https://dp6xfco23ya1f.cloudfront.net/
+
+Right now its accessible through domain name and also from that direct endpoint
+I wnat to change the policy to access content only from cloud front and not all.
+
+Try to set policy with condition to provide access from cloudfront but not for all
+
+Principal: "cloudfront.amazonaws.com"
+condition: stringEnqual, sourceArn : enter arn value for cloudfront distribution
