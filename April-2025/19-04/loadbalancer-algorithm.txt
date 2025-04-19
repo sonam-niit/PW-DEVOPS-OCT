@@ -1,0 +1,55 @@
+Load balancer Algorithms
+
+1. Round Robin:
+    let's say you have a pool of 4 instance and loadbalancer is 
+    getting traffic so it pass the request sequencelly to all your instances.
+
+    Req1 --> instance1 , Req2 --> instance2 ; Req3 --> instance3
+    Req4 --> instance4 ; Req5 --> instance1
+
+    UseCase: It works well if your all server having equal capacity
+
+    Cons: It not works well if you servers having diffrent capacity
+
+2. Weighted Round Robin:
+
+    Similar to Round Robin, but assigns weights to server
+    based on the capacity.
+
+    server1(weight 3), server2 (weight 1), server3 (weight 2)
+    server1 get 3 Req, server2 will get 1 Req, server3 will get 2 request
+
+    UseCase: When servers have diffrent performance capacity
+    problem: in this case sometimes the server who is having less capacity
+    will not get request to handle.
+
+3. Least Connections:
+
+    Routes traffic to the server with the fewest active connections.
+
+    if the server1 handling 5 req, server 2 handling 3 req and server3
+    handling 1 req, then new traffic is routed to server3
+
+    usecase: Ideal when traffic has long-lived sessions or uneven load.
+
+    problem: as it is checking just no of active connections we are not
+    utilizing proper weighted resources.
+
+4. Weighted Least Connections:
+    combining weight with active connections to get the best server for
+    handling request.
+
+    UseCase: Useful for mixed-capacity environment in dynamic traffic.
+
+5. IP Has (Source IP Hashing):
+    Hashes the Client IP to consitently route a client to same server.
+
+    UseCase: Session Persistence without sticky sessions.
+
+6. URL Hash / Request Hash:
+
+    Routes based on a hash of the request content like URL, headers
+
+    UseCase: good in content aware routing or caching
+
+    for using CDN loadbalancer we can use this Algorithm

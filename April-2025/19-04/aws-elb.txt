@@ -1,0 +1,36 @@
+EC2 provides option to set ELB (elastic load balancer)
+
+Let's say you have created 3-4 instance and now you wnat to setup ELB
+
+Provides 4 types: ALB: Application Load balancer
+                  NLB: Network Load balancer
+                  GLB: gateway load balancer
+                  CLB (classic load balancer)Legasy load balancer
+
+you can create ALB for manage multiple Application launched using multiple
+instances.
+
+Let's cretae one manual process.
+
+Create 2 ubuntu instance
+    while creting instance choose diffrent subnets in default VPC
+    also security group allows 22 and 80 port
+    after launching just follow the below process.
+    connect
+        sudo apt update
+        sudo install nging -y
+        sudo cd /var/www/html
+        sudo nano index-debian.html (type index tab)
+        edit and change the title like server 1 and server 2
+        sudo systemctl enable nginx
+        sudo systemctl start nginx
+cretate loadbalancer --> Application loadbalancer-->
+internet facing --> IPV4 --> select default VPC -->
+availability zone where your instances cretaed -->
+select security group default as well as your group
+cretaed for instance --> HTTP in listener click on create
+load balancer.
+
+Check the status to active
+copy DNS and check in browser.
+you can see the response coming from diffrent servers.
